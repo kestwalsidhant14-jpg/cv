@@ -1,33 +1,13 @@
-// Dark Mode Toggle
-const toggle = document.getElementById("theme-toggle");
+const reveals = document.querySelectorAll(".reveal");
 
-toggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-    toggle.textContent =
-        document.body.classList.contains("dark") ? "☀️" : "🌙";
-});
+window.addEventListener("scroll", () => {
+    reveals.forEach((element) => {
+        const windowHeight = window.innerHeight;
+        const elementTop = element.getBoundingClientRect().top;
+        const revealPoint = 100;
 
-// Fade In On Scroll
-const faders = document.querySelectorAll(".fade");
-
-const appearOptions = {
-    threshold: 0.2
-};
-
-const appearOnScroll = new IntersectionObserver(function (
-    entries,
-    observer
-) {
-    entries.forEach(entry => {
-        if (!entry.isIntersecting) {
-            return;
-        } else {
-            entry.target.classList.add("show");
-            observer.unobserve(entry.target);
+        if (elementTop < windowHeight - revealPoint) {
+            element.classList.add("active");
         }
     });
-}, appearOptions);
-
-faders.forEach(fader => {
-    appearOnScroll.observe(fader);
 });
